@@ -93,7 +93,7 @@ void consumer(int consumerId)
 
         // Імітація обробки дзвінка
         std::this_thread::sleep_for(
-            std::chrono::milliseconds(200)
+            std::chrono::milliseconds(700)
         );
 
         {
@@ -126,8 +126,6 @@ int main()
 
     consumers.emplace_back(consumer, 1);
     consumers.emplace_back(consumer, 2);
-    consumers.emplace_back(consumer, 3);
-    consumers.emplace_back(consumer, 4);
 
     producerThread.join();
 
