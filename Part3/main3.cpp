@@ -55,7 +55,6 @@ void producer()
                       << " s\n";
         }
 
-        condition.notify_one();
 
         std::this_thread::sleep_for(
             std::chrono::milliseconds(100)
@@ -93,7 +92,7 @@ void consumer(int consumerId)
 
         // Імітація обробки дзвінка
         std::this_thread::sleep_for(
-            std::chrono::milliseconds(700)
+            std::chrono::milliseconds(200)
         );
 
         {
@@ -143,7 +142,7 @@ int main()
         double averageWaitingTime =
             static_cast<double>(totalWaitingTime) / processedCalls;
 
-        std::cout << "Avarage waiting time: "
+        std::cout << "Average waiting time: "
                   << averageWaitingTime << " s\n";
     }
 
