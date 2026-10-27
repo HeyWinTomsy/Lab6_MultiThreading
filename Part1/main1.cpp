@@ -1,15 +1,18 @@
 #include <iostream>
 #include <thread>
+#include <mutex>
 
 const int N = 2;
 const int ITERATIONS = N * 100000;
 
 int counter = 0;
+std::mutex counterMutex;
 
 void increment()
 {
     for (int i = 0; i < ITERATIONS; ++i)
     {
+        std::lock_guard<std::mutex> lock(counterMutex);
         ++counter;
     }
 }
