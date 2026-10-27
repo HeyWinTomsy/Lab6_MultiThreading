@@ -1,19 +1,17 @@
 #include <iostream>
 #include <thread>
-#include <mutex>
+#include <atomic>
 
 const int N = 2;
 const int ITERATIONS = N * 100000;
 
-int counter = 0;
-std::mutex counterMutex;
+std::atomic<int> counter(0);
 
 void increment()
 {
     for (int i = 0; i < ITERATIONS; ++i)
     {
-        std::lock_guard<std::mutex> lock(counterMutex);
-        ++counter;
+        counter++;
     }
 }
 
@@ -26,9 +24,10 @@ int main()
     t2.join();
 
     int expected = 2 * ITERATIONS;
+    int actual = counter.load();
 
-    std::cout << "Expected value: " << expected << '\n';
-    std::cout << "Actual value:   " << counter << '\n';
+    std::cout << "Expected value: " << expected << std::endl;
+    std::cout << "Actual value:   " << actual << std::endl;
 
     return 0;
 }
