@@ -9,31 +9,22 @@ std::barrier syncPoint(2);
 
 void task1()
 {
-    std::cout << "Thread 1: locking mutexA\n";
-    std::lock_guard<std::mutex> lockA(mutexA);
+    std::cout << "Thread 1: waiting for both mutexes\n";
 
-    std::cout << "Thread 1: mutexA locked\n";
-    syncPoint.arrive_and_wait();
-
-    std::cout << "Thread 1: waiting for mutexB\n";
-    std::lock_guard<std::mutex> lockB(mutexB);
+    std::scoped_lock lock(mutexA, mutexB);
 
     std::cout << "Thread 1: both mutexes locked\n";
 }
 
 void task2()
 {
-    std::cout << "Thread 2: locking mutexB\n";
-    std::lock_guard<std::mutex> lockB(mutexB);
+    std::cout << "Thread 2: waiting for both mutexes\n";
 
-    std::cout << "Thread 2: mutexB locked\n";
-    syncPoint.arrive_and_wait();
-
-    std::cout << "Thread 2: waiting for mutexA\n";
-    std::lock_guard<std::mutex> lockA(mutexA);
+    std::scoped_lock lock(mutexA, mutexB);
 
     std::cout << "Thread 2: both mutexes locked\n";
 }
+
 
 int main()
 {
