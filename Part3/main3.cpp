@@ -125,7 +125,6 @@ int main()
     std::vector<std::thread> consumers;
 
     consumers.emplace_back(consumer, 1);
-    consumers.emplace_back(consumer, 2);
 
     producerThread.join();
 
